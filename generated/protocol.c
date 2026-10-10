@@ -28,22 +28,22 @@ typedef enum ContentType {
 typedef enum DeviceStatus {
     DEVICE_STATUS_NONE = 0,
     DEVICE_STATUS_BOOTING = 1,
-    DEVICE_STATUS_NORMAL = 4,
-    DEVICE_STATUS_NETWORK_ERROR = 5,
-    DEVICE_STATUS_UNKNOWN_ERROR = 6,
-    DEVICE_STATUS_SENSORS_ERROR = 7,
-    DEVICE_STATUS_TH_SENSOR_ERROR = 8,
-    DEVICE_STATUS_TEMPERATURE_ERROR = 9,
-    DEVICE_STATUS_HUMIDITY_ERROR = 10,
-    DEVICE_STATUS_CO2_ERROR = 11,
-    DEVICE_STATUS_METHANE_SENSOR_ERROR = 12,
-    DEVICE_STATUS_METHANE_DETECTED = 13,
-    DEVICE_STATUS_METHANE_LEVEL_HIGH = 14,
-    DEVICE_STATUS_SMOKE_SENSOR_ERROR = 15,
-    DEVICE_STATUS_SMOKE_DETECTED = 16,
-    DEVICE_STATUS_SMOKE_LEVEL_HIGH = 17,
-    DEVICE_STATUS_WARNING = 18,
-    DEVICE_STATUS_DANGER = 19,
+    DEVICE_STATUS_NORMAL = 2,
+    DEVICE_STATUS_NETWORK_ERROR = 3,
+    DEVICE_STATUS_UNKNOWN_ERROR = 4,
+    DEVICE_STATUS_SENSORS_ERROR = 5,
+    DEVICE_STATUS_TH_SENSOR_ERROR = 6,
+    DEVICE_STATUS_TEMPERATURE_ERROR = 7,
+    DEVICE_STATUS_HUMIDITY_ERROR = 8,
+    DEVICE_STATUS_CO2_ERROR = 9,
+    DEVICE_STATUS_METHANE_SENSOR_ERROR = 10,
+    DEVICE_STATUS_METHANE_DETECTED = 11,
+    DEVICE_STATUS_METHANE_LEVEL_HIGH = 12,
+    DEVICE_STATUS_SMOKE_SENSOR_ERROR = 13,
+    DEVICE_STATUS_SMOKE_DETECTED = 14,
+    DEVICE_STATUS_SMOKE_LEVEL_HIGH = 15,
+    DEVICE_STATUS_WARNING = 16,
+    DEVICE_STATUS_DANGER = 17,
 } DeviceStatus;
 
 
@@ -156,7 +156,7 @@ const uint8_t *information_decode(Information *msg, const uint8_t *buffer, size_
 
     size_t offset = 0;
 
-    if (buffer[offset] > 19)
+    if (buffer[offset] > 17)
         return NULL;
     msg->status = (DeviceStatus)buffer[offset++];
 
@@ -298,7 +298,7 @@ const uint8_t *set_device_status_decode(SetDeviceStatus *msg, const uint8_t *buf
 
     size_t offset = 0;
 
-    if (buffer[offset] > 19)
+    if (buffer[offset] > 17)
         return NULL;
     msg->status = (DeviceStatus)buffer[offset++];
 

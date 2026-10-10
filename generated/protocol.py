@@ -146,31 +146,31 @@ class DeviceStatus(IntEnum):
     NONE = 0
     BOOTING = 1
     
-    NORMAL = 4
+    NORMAL = 2
 
-    NETWORK_ERROR = 5
-    UNKNOWN_ERROR = 6
-    SENSORS_ERROR = 7
+    NETWORK_ERROR = 3
+    UNKNOWN_ERROR = 4
+    SENSORS_ERROR = 5
 
     # Temperature / Humidity / CO2 sensor
-    TH_SENSOR_ERROR = 8
-    TEMPERATURE_ERROR = 9
-    HUMIDITY_ERROR = 10
-    CO2_ERROR = 11
+    TH_SENSOR_ERROR = 6
+    TEMPERATURE_ERROR = 7
+    HUMIDITY_ERROR = 8
+    CO2_ERROR = 9
 
     # Methane sensor
-    METHANE_SENSOR_ERROR = 12
-    METHANE_DETECTED = 13
-    METHANE_LEVEL_HIGH = 14
+    METHANE_SENSOR_ERROR = 10
+    METHANE_DETECTED = 11
+    METHANE_LEVEL_HIGH = 12
 
     # Smoke sensor
-    SMOKE_SENSOR_ERROR = 15
-    SMOKE_DETECTED = 16
-    SMOKE_LEVEL_HIGH = 17
+    SMOKE_SENSOR_ERROR = 13
+    SMOKE_DETECTED = 14
+    SMOKE_LEVEL_HIGH = 15
 
 
-    WARNING = 18
-    DANGER = 19
+    WARNING = 16
+    DANGER = 17
     
 
 
