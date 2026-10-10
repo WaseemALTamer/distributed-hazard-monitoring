@@ -1,14 +1,15 @@
 
 .vscode/
 
-build/
+firmware/libraries/
+firmware/build/
 
 
 __pycache__/
 *.py[cod]
 
 
-libraries/*
+
 
 
 .venv/
