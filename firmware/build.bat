@@ -1,14 +1,28 @@
 @echo off
+
+
+set "TARGET=SensorNode"
+
+
 set "ROOT=%~dp0"
-set "LIBRARIES=%ROOT%libraries"
+set "SKETCH=%ROOT%\%TARGET%\main"
+set "LIBRARIES=%SKETCH%\libraries"
+set "BUILD=%ROOT%build"
 
 echo Batch file location: %ROOT%
+echo Sketch folder: %SKETCH%
 echo Libraries folder: %LIBRARIES%
+echo Build folder: %BUILD%
 
+arduino-cli compile -v ^
+  --fqbn esp32:esp32:esp32 ^
+  --libraries "%LIBRARIES%" ^
+  --build-path "%BUILD%" ^
+  "%SKETCH%"
 
+if errorlevel 1 (
+    echo Build failed.
+    exit /b 1
+)
 
-arduino-cli compile -v `
-  --fqbn esp32:esp32:esp32 `
-  --libraries %LIBRARIES% `
-  --build-path ".\build" `
-  "."
+echo Build succeeded.
