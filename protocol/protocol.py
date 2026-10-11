@@ -135,9 +135,9 @@ class ContentType(IntEnum):
     COMMAND = 2
     INFORMATION = 3
     DISCOVERY = 4
-    WIFI_CONNECT = 6
-    SET_DEVICE_STATUS = 7
-    SET_DEVICE_NAME = 8
+    WIFI_CONNECT = 5
+    SET_DEVICE_STATUS = 6
+    SET_DEVICE_NAME = 7
 
 
 

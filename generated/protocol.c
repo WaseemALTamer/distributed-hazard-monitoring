@@ -19,9 +19,9 @@ typedef enum ContentType {
     CONTENT_TYPE_COMMAND = 2,
     CONTENT_TYPE_INFORMATION = 3,
     CONTENT_TYPE_DISCOVERY = 4,
-    CONTENT_TYPE_WIFI_CONNECT = 6,
-    CONTENT_TYPE_SET_DEVICE_STATUS = 7,
-    CONTENT_TYPE_SET_DEVICE_NAME = 8,
+    CONTENT_TYPE_WIFI_CONNECT = 5,
+    CONTENT_TYPE_SET_DEVICE_STATUS = 6,
+    CONTENT_TYPE_SET_DEVICE_NAME = 7,
 } ContentType;
 
 
@@ -79,7 +79,7 @@ const uint8_t *command_decode(Command *msg, const uint8_t *buffer, size_t *buffe
     memcpy(&msg->sequence_number, &buffer[offset], 8);
     offset += 8;
 
-    if (buffer[offset] > 8)
+    if (buffer[offset] > 7)
         return NULL;
     msg->content_type = (ContentType)buffer[offset++];
 
@@ -232,7 +232,7 @@ const uint8_t *message_decode(Message *msg, const uint8_t *buffer, size_t *buffe
 
     msg->is_encrypted = buffer[offset++];
 
-    if (buffer[offset] > 8)
+    if (buffer[offset] > 7)
         return NULL;
     msg->content_type = (ContentType)buffer[offset++];
 
