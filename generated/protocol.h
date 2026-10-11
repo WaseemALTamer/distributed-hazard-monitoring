@@ -82,7 +82,7 @@ typedef struct{
     float temperature;
     float humidity;
     float carbon_dioxide;
-    float methane;
+    float natrual_gas;
     float smoke;
 } Information;
 

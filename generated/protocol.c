@@ -117,7 +117,7 @@ typedef struct{
     float temperature;
     float humidity;
     float carbon_dioxide;
-    float methane;
+    float natrual_gas;
     float smoke;
 } Information;
 
@@ -139,7 +139,7 @@ uint8_t *information_encode(const Information *msg, uint8_t *buffer, size_t *buf
     memcpy(&buffer[offset], &msg->carbon_dioxide, 4);
     offset += 4;
 
-    memcpy(&buffer[offset], &msg->methane, 4);
+    memcpy(&buffer[offset], &msg->natrual_gas, 4);
     offset += 4;
 
     memcpy(&buffer[offset], &msg->smoke, 4);
@@ -169,7 +169,7 @@ const uint8_t *information_decode(Information *msg, const uint8_t *buffer, size_
     memcpy(&msg->carbon_dioxide, &buffer[offset], 4);
     offset += 4;
 
-    memcpy(&msg->methane, &buffer[offset], 4);
+    memcpy(&msg->natrual_gas, &buffer[offset], 4);
     offset += 4;
 
     memcpy(&msg->smoke, &buffer[offset], 4);

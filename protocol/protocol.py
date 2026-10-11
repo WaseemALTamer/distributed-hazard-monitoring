@@ -204,7 +204,7 @@ class Information(MessageBase):
     temperature: float = 0.0
     humidity: float = 0.0
     carbon_dioxide: float = 0.0
-    methane: float = 0.0
+    natrual_gas: float = 0.0
     smoke: float = 0.0
 
     __size__ = 21
@@ -213,7 +213,7 @@ class Information(MessageBase):
         "temperature": (float, 4),
         "humidity": (float, 4),
         "carbon_dioxide": (float, 4),
-        "methane": (float, 4),
+        "natrual_gas": (float, 4),
         "smoke": (float, 4),
     }
 
