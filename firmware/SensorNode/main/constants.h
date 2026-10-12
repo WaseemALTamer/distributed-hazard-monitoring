@@ -8,7 +8,7 @@
 #define SEQUENCE_MAX_STEPS 50
 
 
-#define MAX_NETWORK_CALLBACKS 5;
+#define MAX_NETWORK_CALLBACKS 5
 
 
 #define SDA_PIN 21

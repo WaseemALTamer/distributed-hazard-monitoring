@@ -1,12 +1,15 @@
 #include <Arduino.h>
 
 
-#include "led_controller.h"
 
+#include "device_status_manager.h"
 #include "sequence_manager.h"
+#include "led_controller.h"
 #include "sequence_boot.h"
 #include "network_wifi.h"
 #include "config.h"
+
+
 
 
 
@@ -22,12 +25,15 @@ void setup() {
     // the order of the intiated systems are intentional
 
     Config::init();
+    DeviceStatusManager::init();
     
 
     LEDController::init();
     SequenceBoot::init();
 
     NetworkWifi::init();
+
+    
 
 
 }

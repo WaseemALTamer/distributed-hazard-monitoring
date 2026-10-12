@@ -30,31 +30,31 @@ namespace SequenceBoot{
 
 
     void step_1(void* ctx){
-
-
         LEDController::led_red.start_transition();
+        LEDController::led_green.reverse_transition();
+        LEDController::led_blue.reverse_transition();
     }
 
 
     void step_2(void* ctx){
-
         LEDController::led_red.reverse_transition();
-
         LEDController::led_green.start_transition();
+        LEDController::led_blue.reverse_transition();
         
 
     }
 
 
     void step_3(void* ctx){
-
+        LEDController::led_red.reverse_transition();
         LEDController::led_green.reverse_transition();
-
         LEDController::led_blue.start_transition();
     }
 
 
     void step_4(void* ctx){
+        LEDController::led_red.reverse_transition();
+        LEDController::led_green.reverse_transition();
         LEDController::led_blue.reverse_transition();
     }
 

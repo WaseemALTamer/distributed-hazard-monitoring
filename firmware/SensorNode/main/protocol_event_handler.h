@@ -1,6 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "constants.h"
+#include "protocol.h"
 
 namespace ProtocalEventHandler
 {
