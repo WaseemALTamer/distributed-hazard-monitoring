@@ -4,6 +4,7 @@
 
 
 #include "tick_system/tick_controller.h"
+#include "constants.h"
 #include "config.h"
 
 namespace SequenceManager

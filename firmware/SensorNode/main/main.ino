@@ -5,6 +5,8 @@
 
 #include "sequence_manager.h"
 #include "sequence_boot.h"
+#include "network_wifi.h"
+#include "config.h"
 
 
 
@@ -19,8 +21,13 @@ void setup() {
 
     // the order of the intiated systems are intentional
 
+    Config::init();
+    
+
     LEDController::init();
     SequenceBoot::init();
+
+    NetworkWifi::init();
 
 
 }
@@ -32,6 +39,8 @@ void loop() {
 
     LEDController::loop();
     SequenceManager::loop();
+
+    NetworkWifi::loop();
     
 
 }

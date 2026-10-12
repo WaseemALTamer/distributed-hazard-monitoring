@@ -50,6 +50,45 @@ typedef struct{
     void *content;
 } Command;
 
+typedef struct{
+} Discovery;
+
+typedef struct{
+    DeviceStatus status;
+    float temperature;
+    float humidity;
+    float carbon_dioxide;
+    float natrual_gas;
+    float smoke;
+} Information;
+
+typedef struct{
+    char device_name[64];
+    uint8_t mac_address[6];
+    double time_stamp;
+    uint8_t is_encrypted;
+    ContentType content_type;
+    void *content;
+} Message;
+
+typedef struct{
+    char device_name[64];
+} SetDeviceName;
+
+typedef struct{
+    DeviceStatus status;
+} SetDeviceStatus;
+
+typedef struct{
+    char ssid[32];
+    char password[64];
+} WifiConnect;
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 uint8_t *command_encode(
     const Command *msg,
     uint8_t *buffer,
@@ -61,9 +100,6 @@ const uint8_t *command_decode(
     const uint8_t *buffer,
     size_t *buffer_size
 );
-
-typedef struct{
-} Discovery;
 
 uint8_t *discovery_encode(
     const Discovery *msg,
@@ -77,15 +113,6 @@ const uint8_t *discovery_decode(
     size_t *buffer_size
 );
 
-typedef struct{
-    DeviceStatus status;
-    float temperature;
-    float humidity;
-    float carbon_dioxide;
-    float natrual_gas;
-    float smoke;
-} Information;
-
 uint8_t *information_encode(
     const Information *msg,
     uint8_t *buffer,
@@ -97,15 +124,6 @@ const uint8_t *information_decode(
     const uint8_t *buffer,
     size_t *buffer_size
 );
-
-typedef struct{
-    char device_name[64];
-    uint8_t mac_address[6];
-    double time_stamp;
-    uint8_t is_encrypted;
-    ContentType content_type;
-    void *content;
-} Message;
 
 uint8_t *message_encode(
     const Message *msg,
@@ -119,10 +137,6 @@ const uint8_t *message_decode(
     size_t *buffer_size
 );
 
-typedef struct{
-    char device_name[64];
-} SetDeviceName;
-
 uint8_t *set_device_name_encode(
     const SetDeviceName *msg,
     uint8_t *buffer,
@@ -134,10 +148,6 @@ const uint8_t *set_device_name_decode(
     const uint8_t *buffer,
     size_t *buffer_size
 );
-
-typedef struct{
-    DeviceStatus status;
-} SetDeviceStatus;
 
 uint8_t *set_device_status_encode(
     const SetDeviceStatus *msg,
@@ -151,11 +161,6 @@ const uint8_t *set_device_status_decode(
     size_t *buffer_size
 );
 
-typedef struct{
-    char ssid[32];
-    char password[64];
-} WifiConnect;
-
 uint8_t *wifi_connect_encode(
     const WifiConnect *msg,
     uint8_t *buffer,
@@ -167,5 +172,10 @@ const uint8_t *wifi_connect_decode(
     const uint8_t *buffer,
     size_t *buffer_size
 );
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PROTOCOL_H */

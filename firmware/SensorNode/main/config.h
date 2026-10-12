@@ -14,17 +14,18 @@ namespace Config{
     extern char name[64];
     //extern char token[32];
 
-    extern float transition_speed;
-
-    extern float brightness;
-
 
     extern char network_ssid[32];
     extern char network_password[64];
 
+    extern char hotspot_ssid[32];
+    extern char hotspot_password[64];
+
     extern int network_port;
 
-
+    void save();
+    bool load();
+    
     void init();
     void loop();
 }
