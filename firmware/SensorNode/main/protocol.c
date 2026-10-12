@@ -197,7 +197,8 @@ uint8_t *set_date_time_encode(const SetDateTime *msg, uint8_t *buffer, size_t *b
 
     buffer[offset++] = msg->month;
 
-    buffer[offset++] = msg->year;
+    memcpy(&buffer[offset], &msg->year, 4);
+    offset += 4;
 
     *buffer_size -= offset;
     return buffer + offset;
@@ -220,7 +221,8 @@ const uint8_t *set_date_time_decode(SetDateTime *msg, const uint8_t *buffer, siz
 
     msg->month = buffer[offset++];
 
-    msg->year = buffer[offset++];
+    memcpy(&msg->year, &buffer[offset], 4);
+    offset += 4;
 
     *buffer_size -= offset;
     return buffer + offset;

@@ -6,12 +6,12 @@
 // we are importing wire and  the Rtc_Pcf8563 library we are taking 13%
 
 
-
+// this module is not suitable after a centery or so long
 
 
 #include <Wire.h>
 #include <Rtc_Pcf8563.h>
-
+#include <time.h>
 
 #include "constants.h"
 #include "protocol_event_handler.h"
@@ -45,9 +45,29 @@ namespace RTCClock{
     // so you can update your date on display if you need to do so
 
 
-    byte current_seconds;
-    byte current_mintues;
-    byte current_hours;
+    int current_seconds;
+    int current_mintues;
+    int current_hours;
+
+    int current_day;
+    int current_month;
+    int current_year;
+
+
+    uint32_t get_unix_time() {
+        struct tm t = {};
+
+        t.tm_sec  = current_seconds;
+        t.tm_min  = current_mintues;
+        t.tm_hour = current_hours;
+        t.tm_mday = current_day;
+        t.tm_mon  = current_month - 1;
+        t.tm_year = current_year + 100;
+
+        time_t timestamp = mktime(&t);
+
+        return (uint32_t)timestamp;
+    }
 
 
 
@@ -237,20 +257,24 @@ namespace RTCClock{
 
     }
 
-    void set_date(byte day, byte months, byte fullYear){
+    void set_date(byte day, byte months, uint32_t fullYear){
         // this code is cabable of tracking week days but we are not
         // going to do that from  the start  but we  can always come
         // back to make it better
 
-        byte year = fullYear % 100;          // 2026 -> 26
-        byte century = (fullYear >= 2000);   // 1 if >=2000 else 0
+        byte year = fullYear % 100;
+        byte century = (fullYear >= 2000);
+
+        //Serial.println(fullYear);
+        //Serial.println(year);
+        //Serial.println(century);
 
         rtc.setDate(
-            day,        // day
-            0,          // weekday (ignored)
-            months,     // month
-            century,    // century flag
-            year        // year (0-99)
+            day,
+            0,
+            months,
+            century,
+            year
         );
     }
 
@@ -300,6 +324,16 @@ namespace RTCClock{
 
 
     void call_back_test(int seconds, int mintues, int hours){
+        
+        Serial.printf("%d", get_unix_time());
+        Serial.printf("        ");
+        Serial.printf("%d", current_day);
+        Serial.printf("/");
+        Serial.printf("%d", current_month);
+        Serial.printf("/");
+        Serial.printf("%d", current_year);
+        Serial.printf("        ");
+
         Serial.printf("%d", hours);
         Serial.printf(":");
         Serial.printf("%d", mintues);
@@ -321,7 +355,7 @@ namespace RTCClock{
 
         // register the call backs
         ProtocalEventHandler::register_set_date_time_callback(on_network_date_time_sync_request);
-        register_time_callback(call_back_test);
+        //register_time_callback(call_back_test);
     }
 
 
@@ -403,16 +437,19 @@ namespace RTCClock{
             }
 
 
-        byte current_day = get_day(); // note that am using the wrapped functions as well
+        current_day = get_day(); // note that am using the wrapped functions as well
         if (latest_day != current_day){
             latest_day = current_day;
 
             // we trigger date event here
 
+            current_month = get_month();
+            current_year = get_year();
+
             on_date_event(
                 current_day, // we already have the day from befor 
-                get_month(), // we get the year 
-                get_year() // we get the hour
+                current_month, // we get the year 
+                current_year // we get the hour
             );
 
 

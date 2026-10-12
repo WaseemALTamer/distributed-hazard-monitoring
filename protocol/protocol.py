@@ -300,7 +300,7 @@ class SetDateTime(MessageBase):
         "hours": (int, 1),
         "day": (int, 1),
         "month": (int, 1),
-        "year": (int, 1)
+        "year": (int, 4)
     }
 
 
