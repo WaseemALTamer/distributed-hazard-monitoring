@@ -6,7 +6,7 @@
 
 #include "sequence_boot.h"
 #include "sequence_normal.h"
-
+#include "sequence_danger.h"
 
 
 
@@ -25,6 +25,11 @@ namespace DeviceStatusManager{
             case DEVICE_STATUS_NORMAL:{
 
                 SequenceNormal::init();
+                break;
+            }
+            case DEVICE_STATUS_DANGER:{
+
+                SequenceDanger::init();
                 break;
             }
             

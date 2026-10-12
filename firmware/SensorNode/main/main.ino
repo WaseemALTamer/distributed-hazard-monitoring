@@ -7,7 +7,10 @@
 #include "led_controller.h"
 #include "sequence_boot.h"
 #include "network_wifi.h"
+#include "rtc_clock.h"
 #include "config.h"
+
+
 
 
 
@@ -26,7 +29,9 @@ void setup() {
 
     Config::init();
     DeviceStatusManager::init();
-    
+
+    RTCClock::init();
+
 
     LEDController::init();
     SequenceBoot::init();
@@ -43,10 +48,11 @@ void loop() {
 
     // the order of updating the systems are intentional
 
+    RTCClock::loop();
+
     LEDController::loop();
     SequenceManager::loop();
 
     NetworkWifi::loop();
-    
 
 }

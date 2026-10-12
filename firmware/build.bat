@@ -5,8 +5,8 @@ set "TARGET=SensorNode"
 
 
 set "ROOT=%~dp0"
-set "SKETCH=%ROOT%\%TARGET%\main"
-set "LIBRARIES=%SKETCH%\libraries"
+set "SKETCH=%ROOT%%TARGET%\main"
+set "LIBRARIES=%ROOT%libraries"
 set "BUILD=%ROOT%build"
 
 echo Batch file location: %ROOT%
