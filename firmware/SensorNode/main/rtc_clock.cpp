@@ -12,7 +12,10 @@
 #include <Wire.h>
 #include <Rtc_Pcf8563.h>
 
+
 #include "constants.h"
+#include "protocol_event_handler.h"
+#include "protocol.h"
 
 
 
@@ -305,12 +308,20 @@ namespace RTCClock{
         Serial.println(" ");
     }
 
+
+    void on_network_date_time_sync_request(SetDateTime content, IPAddress senderIP, uint16_t senderPort){
+        set_time(content.hours, content.minutes, content.seconds);
+        set_date(content.day, content.month, content.year);
+    }
+
+
     void init() {
         Wire.begin(SDA_PIN, SCL_PIN); // we start the I2C communication
         //pinMode (int_pin, INPUT_PULLUP); // set up the pin so we can read the input from it
 
-
-        //register_time_callback(call_back_test);
+        // register the call backs
+        ProtocalEventHandler::register_set_date_time_callback(on_network_date_time_sync_request);
+        register_time_callback(call_back_test);
     }
 
 

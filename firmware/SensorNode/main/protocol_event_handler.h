@@ -35,6 +35,10 @@ namespace ProtocalEventHandler
     extern InformationCallback information_callbacks[MAX_NETWORK_CALLBACKS];
     extern int information_callback_count;
 
+    typedef void (*SetDateTimeCallback)(SetDateTime content, IPAddress senderIP, uint16_t senderPort);
+    extern SetDateTimeCallback set_date_time_callbacks[MAX_NETWORK_CALLBACKS];
+    extern int set_date_time_callback_count;
+
     bool register_message_callback(MessageCallback callback);
     bool register_command_callback(CommandCallback callback);
     bool register_wifi_connect_callback(WifiConnectCallback callback);
@@ -42,14 +46,7 @@ namespace ProtocalEventHandler
     bool register_set_device_name_callback(SetDeviceNameCallback callback);
     bool register_set_device_status_callback(SetDeviceStatusCallback callback);
     bool register_information_callback(InformationCallback callback);
-
-    void trigger_message_callbacks(Message content);
-    void trigger_command_callbacks(Command content);
-    void trigger_wifi_connect_callbacks(WifiConnect content);
-    void trigger_discovery_callbacks(Discovery content);
-    void trigger_set_device_name_callbacks(SetDeviceName content);
-    void trigger_set_device_status_callbacks(SetDeviceStatus content);
-    void trigger_information_callbacks(Information content);
+    bool register_set_date_time_callback(SetDateTimeCallback callback);
 
     void handle_message(
         const uint8_t* buffer,

@@ -36,6 +36,7 @@ namespace ProtocalEventHandler
     SetDeviceName set_device_name{};
     SetDeviceStatus set_device_status{};
     Information information{};
+    SetDateTime set_date_time{};
 
 
     MessageCallback message_callbacks[MAX_NETWORK_CALLBACKS] = {};
@@ -58,6 +59,10 @@ namespace ProtocalEventHandler
 
     InformationCallback information_callbacks[MAX_NETWORK_CALLBACKS] = {};
     int information_callback_count = 0;
+
+    SetDateTimeCallback set_date_time_callbacks[MAX_NETWORK_CALLBACKS] = {};
+    int set_date_time_callback_count = 0;
+
 
 
     // registration functions
@@ -118,6 +123,16 @@ namespace ProtocalEventHandler
     }
 
 
+    bool register_set_date_time_callback(SetDateTimeCallback callback) {
+        if (callback == nullptr ||
+            set_date_time_callback_count >= MAX_NETWORK_CALLBACKS) return false;
+
+        set_date_time_callbacks[set_date_time_callback_count++] = callback;
+        return true;
+    }
+
+
+
     // trigger functions
     void trigger_message_callbacks(Message content, IPAddress senderIP, uint16_t senderPort) {
         for (int i = 0; i < message_callback_count; i++)
@@ -152,6 +167,11 @@ namespace ProtocalEventHandler
     void trigger_information_callbacks(Information content, IPAddress senderIP, uint16_t senderPort) {
         for (int i = 0; i < information_callback_count; i++)
             information_callbacks[i](content, senderIP, senderPort);
+    }
+
+    void trigger_set_date_time_callbacks(SetDateTime content, IPAddress senderIP, uint16_t senderPort) {
+        for (int i = 0; i < set_date_time_callback_count; i++)
+            set_date_time_callbacks[i](content, senderIP, senderPort);
     }
 
 
@@ -243,6 +263,12 @@ namespace ProtocalEventHandler
             case CONTENT_TYPE_INFORMATION:
                 if (information_decode(&information, buffer, &remaining) != nullptr) {
                     trigger_information_callbacks(information, senderIP, senderPort);
+                }
+                break;
+
+            case CONTENT_TYPE_SET_DATE_TIME:
+                if (set_date_time_decode(&set_date_time, buffer, &remaining) != nullptr) {
+                    trigger_set_date_time_callbacks(set_date_time, senderIP, senderPort);
                 }
                 break;
 

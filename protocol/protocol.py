@@ -138,6 +138,7 @@ class ContentType(IntEnum):
     WIFI_CONNECT = 5
     SET_DEVICE_STATUS = 6
     SET_DEVICE_NAME = 7
+    SET_DATE_TIME = 8
 
 
 
@@ -281,6 +282,28 @@ class SetDeviceStatus(MessageBase):
     }
 
 
+# Command Message
+@dataclass
+class SetDateTime(MessageBase):
+    seconds:int = 0
+    minutes:int = 0
+    hours:int = 0
+
+    day:int = 0
+    month:int = 0
+    year:int = 0
+    
+    __size__ = 6
+    __fields__ = {
+        "seconds": (int, 1),
+        "minutes": (int, 1),
+        "hours": (int, 1),
+        "day": (int, 1),
+        "month": (int, 1),
+        "year": (int, 1)
+    }
+
+
 
 
 
@@ -292,5 +315,6 @@ MESSAGE_TYPE_REGISTRY = {
     ContentType.SET_DEVICE_STATUS : SetDeviceStatus,
     ContentType.INFORMATION : Information,
     ContentType.SET_DEVICE_NAME : SetDeviceName,
-    ContentType.DISCOVERY : Discovery
+    ContentType.DISCOVERY : Discovery,
+    ContentType.SET_DATE_TIME: SetDateTime
 }

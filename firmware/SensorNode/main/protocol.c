@@ -40,7 +40,7 @@ const uint8_t *command_decode(Command *msg, const uint8_t *buffer, size_t *buffe
     memcpy(&msg->sequence_number, &buffer[offset], 8);
     offset += 8;
 
-    if (buffer[offset] > 7)
+    if (buffer[offset] > 8)
         return NULL;
     msg->content_type = (ContentType)buffer[offset++];
 
@@ -172,9 +172,55 @@ const uint8_t *message_decode(Message *msg, const uint8_t *buffer, size_t *buffe
 
     msg->is_encrypted = buffer[offset++];
 
-    if (buffer[offset] > 7)
+    if (buffer[offset] > 8)
         return NULL;
     msg->content_type = (ContentType)buffer[offset++];
+
+    *buffer_size -= offset;
+    return buffer + offset;
+}
+
+uint8_t *set_date_time_encode(const SetDateTime *msg, uint8_t *buffer, size_t *buffer_size)
+{
+    if (*buffer_size < 6)
+        return NULL;
+
+    size_t offset = 0;
+
+    buffer[offset++] = msg->seconds;
+
+    buffer[offset++] = msg->minutes;
+
+    buffer[offset++] = msg->hours;
+
+    buffer[offset++] = msg->day;
+
+    buffer[offset++] = msg->month;
+
+    buffer[offset++] = msg->year;
+
+    *buffer_size -= offset;
+    return buffer + offset;
+}
+
+const uint8_t *set_date_time_decode(SetDateTime *msg, const uint8_t *buffer, size_t *buffer_size)
+{
+    if (*buffer_size < 6)
+        return NULL;
+
+    size_t offset = 0;
+
+    msg->seconds = buffer[offset++];
+
+    msg->minutes = buffer[offset++];
+
+    msg->hours = buffer[offset++];
+
+    msg->day = buffer[offset++];
+
+    msg->month = buffer[offset++];
+
+    msg->year = buffer[offset++];
 
     *buffer_size -= offset;
     return buffer + offset;

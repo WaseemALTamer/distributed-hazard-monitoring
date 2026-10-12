@@ -19,6 +19,7 @@ typedef enum ContentType {
     CONTENT_TYPE_WIFI_CONNECT = 5,
     CONTENT_TYPE_SET_DEVICE_STATUS = 6,
     CONTENT_TYPE_SET_DEVICE_NAME = 7,
+    CONTENT_TYPE_SET_DATE_TIME = 8,
 } ContentType;
 
 
@@ -70,6 +71,15 @@ typedef struct{
     ContentType content_type;
     void *content;
 } Message;
+
+typedef struct{
+    uint8_t seconds;
+    uint8_t minutes;
+    uint8_t hours;
+    uint8_t day;
+    uint8_t month;
+    uint8_t year;
+} SetDateTime;
 
 typedef struct{
     char device_name[64];
@@ -133,6 +143,18 @@ uint8_t *message_encode(
 
 const uint8_t *message_decode(
     Message *msg,
+    const uint8_t *buffer,
+    size_t *buffer_size
+);
+
+uint8_t *set_date_time_encode(
+    const SetDateTime *msg,
+    uint8_t *buffer,
+    size_t *buffer_size
+);
+
+const uint8_t *set_date_time_decode(
+    SetDateTime *msg,
     const uint8_t *buffer,
     size_t *buffer_size
 );
