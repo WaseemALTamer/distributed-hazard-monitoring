@@ -12,10 +12,15 @@ namespace NetworkWifi{
 
     
     WiFiUDP udp;
+    bool udp_started = false;
 
     bool is_connected = false;
     bool hotspot_active = false;
     int loop_cooldown_duration_ms = 3000;
+
+
+    unsigned long last_reconnect_attempt = 0;
+
 
 
     bool loop_cooldown_passed() {
@@ -73,6 +78,10 @@ namespace NetworkWifi{
 
 
     void init(){
+        WiFi.mode(WIFI_STA);
+        WiFi.setAutoReconnect(true);
+
+
         WiFi.begin(Config::network_ssid, Config::network_password);
     }
 
@@ -86,36 +95,31 @@ namespace NetworkWifi{
             if (WiFi.SSID() != Config::network_ssid) { // check if the wifi we are connected to is the correct wifi
                 is_connected = false;
                 WiFi.disconnect();
-
                 return;
             }
 
 
             if (!is_connected){
-                udp.begin(Config::network_port);
                 Serial.println(WiFi.localIP());
                 is_connected = true;
             }
 
             if (is_connected) {
-                stop_hotspot();
+                //stop_hotspot();
             }
 
         }else{
             is_connected = false;
-
             start_hotspot();
-
-            bool safe_to_reconnect =
-                (status == WL_IDLE_STATUS ||
-                status == WL_NO_SSID_AVAIL ||
-                status == WL_DISCONNECTED ||
-                status == WL_CONNECT_FAILED);
-
-            if (safe_to_reconnect  && loop_cooldown_passed()){
+            if (loop_cooldown_passed()){
                 WiFi.begin(Config::network_ssid, Config::network_password);
             }
-            return;
+        }
+
+        if (!udp_started) {
+            if (udp.begin(Config::network_port)) {
+                udp_started = true;
+            }
         }
 
 

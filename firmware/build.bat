@@ -15,6 +15,7 @@ echo Libraries folder: %LIBRARIES%
 echo Build folder: %BUILD%
 
 arduino-cli compile -v ^
+  --jobs 8 ^
   --fqbn esp32:esp32:esp32 ^
   --libraries "%LIBRARIES%" ^
   --build-path "%BUILD%" ^

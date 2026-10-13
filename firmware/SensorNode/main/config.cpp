@@ -6,7 +6,7 @@
 #include "protocol_event_handler.h"
 
 
-
+// unless you establish a strong connection saving and data will feel jankey
 
 
 namespace Config{
@@ -35,14 +35,20 @@ namespace Config{
             return;
         }
 
+        // clear existing values before writing the new ones
+        preferences.remove("name");
+        preferences.remove("net_ssid");
+        preferences.remove("net_password");
+        preferences.remove("ap_ssid");
+        preferences.remove("ap_password");
+        preferences.remove("ap_port");
+
+        // write the current configuration.
         preferences.putString("name", name);
-
         preferences.putString("net_ssid", network_ssid);
-        preferences.putString("net_pass", network_password);
-
+        preferences.putString("net_password", network_password);
         preferences.putString("ap_ssid", hotspot_ssid);
-        preferences.putString("ap_pass", hotspot_password);
-
+        preferences.putString("ap_password", hotspot_password);
         preferences.putInt("net_port", network_port);
 
         preferences.end();
@@ -67,18 +73,18 @@ namespace Config{
         preferences.getString("name", name, sizeof(name));
 
         preferences.getString(
-            "network_ssid", network_ssid, sizeof(network_ssid));
+            "net_ssid", network_ssid, sizeof(network_ssid));
 
         preferences.getString(
-            "network_password", network_password, sizeof(network_password));
+            "net_password", network_password, sizeof(network_password));
 
         preferences.getString(
-            "hotspot_ssid", hotspot_ssid, sizeof(hotspot_ssid));
+            "ap_ssid", hotspot_ssid, sizeof(hotspot_ssid));
 
         preferences.getString(
-            "hotspot_password", hotspot_password, sizeof(hotspot_password));
+            "ap_password", hotspot_password, sizeof(hotspot_password));
 
-        network_port = preferences.getInt("network_port", 39394); // hard coded defult value change that please
+        network_port = preferences.getInt("net_port", 39394); // hard coded defult value change that please
 
         preferences.end();
 
@@ -86,45 +92,63 @@ namespace Config{
     }
 
 
+    void on_network_set_device_name(SetDeviceName content, IPAddress senderIP, uint16_t senderPort){
+        strncpy(name, content.device_name, sizeof(name));
+        strncpy(hotspot_ssid, content.device_name, sizeof(hotspot_ssid));
+
+        name[sizeof(name) - 1] = '\0';
+        name[sizeof(name) - 1] = '\0';
+
+        save();
+    }
+
 
     void on_network_wifi_connect(WifiConnect content, IPAddress senderIP, uint16_t senderPort){
-
-        Serial.println("Hello world");
-
         strncpy(network_ssid, content.ssid, sizeof(network_ssid) - 1);
         strncpy(network_password, content.password, sizeof(network_password) - 1);
 
         network_ssid[sizeof(network_ssid) - 1] = '\0';
         network_password[sizeof(network_password) - 1] = '\0';
 
+
+        //Serial.printf("WiFi SSID: '%s'\n", network_ssid);
+        //Serial.printf("WiFi Password: '%s'\n", network_password);
+
         save();
     }
 
 
-    void init(){
-
+    void init() {
+        // Default values used only if nothing has been saved.
         strncpy(name, "NODE-1", sizeof(name));
         name[sizeof(name) - 1] = '\0';
 
-        // add the newtork data they are not changable for now at least
-        strncpy(network_ssid, "Waseem", sizeof(network_ssid));
-        strncpy(network_password, "Waseem16102005", sizeof(network_password));
+        network_ssid[0] = '\0';
+        network_password[0] = '\0';
 
+        hotspot_ssid[0] = '\0';
+        hotspot_password[0] = '\0';
 
-        strncpy(hotspot_ssid, "ESP32-WASEEM", sizeof(hotspot_ssid));
-        strncpy(hotspot_password, "", sizeof(hotspot_password));
+        network_port = 39394;
 
+        if (load()) {
+            Serial.println("Configuration loaded.");
+        } else {
+            Serial.println("No saved configuration found; using defaults.");
+        }
 
-        network_ssid[sizeof(network_ssid) - 1] = '\0';
-        network_password[sizeof(network_password) - 1] = '\0';
+        //Serial.printf("Device name: %s\n", name);
+        //Serial.printf("WiFi SSID: '%s'\n", network_ssid);
+        //Serial.printf("WiFi Password: '%s'\n", network_password);
+        
 
-        hotspot_ssid[sizeof(hotspot_ssid) - 1] = '\0';
-        hotspot_password[sizeof(hotspot_password) - 1] = '\0';
+        ProtocalEventHandler::register_wifi_connect_callback(
+            on_network_wifi_connect
+        );
 
-        load();
-
-        ProtocalEventHandler::register_wifi_connect_callback(on_network_wifi_connect);
-
+        ProtocalEventHandler::register_set_device_name_callback(
+            on_network_set_device_name
+        );
     }
 
 
