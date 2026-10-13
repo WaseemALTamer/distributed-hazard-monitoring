@@ -6,14 +6,10 @@
 
 namespace DeviceStatusManager {
 
-    void set_status(
-        SetDeviceStatus content,
-        IPAddress senderIP,
-        uint16_t senderPort
-    );
+    void set_status(int status);
 
     void init();
-
+    void loop();
 }
 
 #endif

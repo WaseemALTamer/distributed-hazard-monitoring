@@ -6,6 +6,12 @@
 
 namespace NetworkWifi
 {
+
+
+    extern bool is_connected;
+
+
+
     // expose the init function so anybody can
     // excuate it and add the schedule it 
     

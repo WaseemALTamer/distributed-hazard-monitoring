@@ -8,7 +8,10 @@
 #include "sequence_boot.h"
 #include "network_wifi.h"
 #include "rtc_clock.h"
+#include "protocol.h"
 #include "config.h"
+
+
 
 
 
@@ -30,16 +33,11 @@ void setup() {
     Config::init();
     DeviceStatusManager::init();
 
+    DeviceStatusManager::set_status(DEVICE_STATUS_BOOTING);
+
     RTCClock::init();
-
-
     LEDController::init();
-    SequenceBoot::init();
-
     NetworkWifi::init();
-
-    
-
 
 }
 
@@ -54,5 +52,7 @@ void loop() {
     SequenceManager::loop();
 
     NetworkWifi::loop();
+
+    DeviceStatusManager::loop();
 
 }

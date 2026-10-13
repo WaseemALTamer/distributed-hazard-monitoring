@@ -3,7 +3,10 @@
 #include "sequence_manager.h"
 #include "tick_system/transition_ease_in_out.h"
 #include "led_controller.h"
-#include "sequence_normal.h"
+
+#include "device_status_manager.h"
+#include "protocol.h"
+
 
 
 // this file is responsible for the boot sequence
@@ -60,7 +63,8 @@ namespace SequenceBoot{
 
 
     void step_5(void* ctx){
-        SequenceNormal::init();
+
+        DeviceStatusManager::set_status(DEVICE_STATUS_NORMAL);
     }
 
     

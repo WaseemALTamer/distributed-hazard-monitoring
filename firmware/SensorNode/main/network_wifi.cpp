@@ -104,9 +104,9 @@ namespace NetworkWifi{
                 is_connected = true;
             }
 
-            if (is_connected) {
+            //if (is_connected) {
                 //stop_hotspot();
-            }
+            //}
 
         }else{
             is_connected = false;
