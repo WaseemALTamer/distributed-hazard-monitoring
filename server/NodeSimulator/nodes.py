@@ -38,14 +38,17 @@ class VirtualNode:
     @staticmethod
     def generate_mac_address(used: set[int]) -> int:
         """
-            this generates a mac address as set of ints and then returns one large int
+            this will genearte a mac address the mac address follows
+            a squence so  you will  always get  the same mac address
+            as long as your pramatesr are the same
         """
-        while True:
-            first_octet = random.randrange(0x02, 0x100, 2)
-            mac = (first_octet << 40) | random.getrandbits(40)
-            if mac not in used:
-                used.add(mac)
-                return mac
+        mac = 0x020000000001
+
+        while mac in used:
+            mac += 1
+
+        used.add(mac)
+        return mac
 
     @staticmethod
     def format_mac(mac: int) -> str:
