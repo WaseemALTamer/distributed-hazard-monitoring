@@ -355,7 +355,7 @@ namespace RTCClock{
 
         // register the call backs
         ProtocalEventHandler::register_set_date_time_callback(on_network_date_time_sync_request);
-        //register_time_callback(call_back_test);
+        register_time_callback(call_back_test);
     }
 
 

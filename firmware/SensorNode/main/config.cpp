@@ -3,13 +3,15 @@
 
 
 #include "Config.h"
+#include "protocol_event_handler.h"
 
 
-Preferences preferences;
+
 
 
 namespace Config{
 
+    Preferences preferences;
 
     char name[64];
 
@@ -85,8 +87,22 @@ namespace Config{
 
 
 
+    void on_network_wifi_connect(WifiConnect content, IPAddress senderIP, uint16_t senderPort){
+
+        Serial.println("Hello world");
+
+        strncpy(network_ssid, content.ssid, sizeof(network_ssid) - 1);
+        strncpy(network_password, content.password, sizeof(network_password) - 1);
+
+        network_ssid[sizeof(network_ssid) - 1] = '\0';
+        network_password[sizeof(network_password) - 1] = '\0';
+
+        save();
+    }
+
+
     void init(){
-        //strncpy(name, "New Name", sizeof(name));
+
         strncpy(name, "NODE-1", sizeof(name));
         name[sizeof(name) - 1] = '\0';
 
@@ -95,17 +111,20 @@ namespace Config{
         strncpy(network_password, "Waseem16102005", sizeof(network_password));
 
 
-        strncpy(hotspot_ssid, "ESP32-WASEEM", sizeof(network_ssid));
-        strncpy(hotspot_password, "", sizeof(network_password));
+        strncpy(hotspot_ssid, "ESP32-WASEEM", sizeof(hotspot_ssid));
+        strncpy(hotspot_password, "", sizeof(hotspot_password));
 
 
-        // adding the null treminator just in case 
         network_ssid[sizeof(network_ssid) - 1] = '\0';
         network_password[sizeof(network_password) - 1] = '\0';
 
+        hotspot_ssid[sizeof(hotspot_ssid) - 1] = '\0';
+        hotspot_password[sizeof(hotspot_password) - 1] = '\0';
 
-        // this will handel loading on the data that you
-        // have stored later on
+        load();
+
+        ProtocalEventHandler::register_wifi_connect_callback(on_network_wifi_connect);
+
     }
 
 

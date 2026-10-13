@@ -70,6 +70,8 @@ namespace NetworkWifi{
         udp.endPacket();
     }
 
+
+
     void init(){
         WiFi.begin(Config::network_ssid, Config::network_password);
     }
@@ -80,6 +82,15 @@ namespace NetworkWifi{
         wl_status_t status = WiFi.status();
 
         if (status == WL_CONNECTED) {
+
+            if (WiFi.SSID() != Config::network_ssid) { // check if the wifi we are connected to is the correct wifi
+                is_connected = false;
+                WiFi.disconnect();
+
+                return;
+            }
+
+
             if (!is_connected){
                 udp.begin(Config::network_port);
                 Serial.println(WiFi.localIP());
