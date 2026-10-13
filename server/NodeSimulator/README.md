@@ -1,0 +1,41 @@
+THIS IS WHERE THE VIRTUAL NODE SIMULATOR IS LOCATED THIS IS RESPONSIBLE 
+FOR SIMULATING WHAT A REAL  ESP32 NODE  WOULD DO FOR REPORTING MESSAGES
+
+
+NOTE THAT FOR THE REAL NODE YOU SHOULD BE ABLE TO COMMUNICATE TO IT AND
+TELL IT WHICH STATE IT SHOULD BE  IN BUT FOR  VIRTUAL NODE YOU WILL NOT
+BE ABLE TO COMMNUICATE DATA WITH IT  JUST A  NODE THAT WILL REPORT DATA
+
+
+I LEFT THE IDEA OF IT BEING RESPONDING TO  THE STATE  BECAUSE YOU WOULD
+THEN HAVE TO LISTEN ON TWO PORTS OTHER WISE YOU WOULD HAVE TO ESTABLISH
+THAT BEFORE HAND AND THIS  VIRTAUL NODE  SIMULATOR IS  NOT SUPPORT THAT
+BECAUSE ITIS NOT THAT SOPHISTICATED
+
+
+IF YOU ARE INTRESTED IN MAKING IT RESPONDE  TO YOUR MESSAGES YOU CAN DO
+IT THOUGH PUSH IT TO A DIFFERENT GIT BRANCH UNRIL I REVIEW IT 
+
+
+
+HOW TO RUN:
+
+RUN THIS FOR SIMPLISITY:
+    "python main.py --normal 10 --dangerous 10" 
+
+
+CHECK THE PRAMATERS OUT FOR MORE CONTROL
+```
+    python main.py -h
+    usage: main.py [-h] [--normal NORMAL] [--dangerous DANGEROUS] [--interval INTERVAL] [--port PORT]
+
+    Broadcast virtual sensor nodes over UDP.
+
+    options:
+    -h, --help            show this help message and exit
+    --normal NORMAL       number of normal nodes (default: 3)
+    --dangerous DANGEROUS
+                            number of dangerous nodes (default: 1)
+    --interval INTERVAL   seconds between broadcasts (default: 10)
+    --port PORT           UDP destination port (default: 39394)
+```
