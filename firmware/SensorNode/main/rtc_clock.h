@@ -45,6 +45,9 @@ namespace RTCClock {
     byte get_year();
 
 
+    uint32_t get_unix_time();
+
+
     // functions to get the alarm time that is already set
     byte get_alarm_mintues();
     byte get_alarm_hour();

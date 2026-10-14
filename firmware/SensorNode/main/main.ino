@@ -3,6 +3,7 @@
 
 
 #include "device_status_manager.h"
+#include "data_broadcaster.h"
 #include "sequence_manager.h"
 #include "led_controller.h"
 #include "sequence_boot.h"
@@ -34,11 +35,12 @@ void setup() {
     DeviceStatusManager::init();
 
     DeviceStatusManager::set_status(DEVICE_STATUS_BOOTING);
-
+    
     RTCClock::init();
     LEDController::init();
     NetworkWifi::init();
 
+    DataBroadcaster::init();
 }
 
 
@@ -54,5 +56,7 @@ void loop() {
     NetworkWifi::loop();
 
     DeviceStatusManager::loop();
+
+    DataBroadcaster::loop();
 
 }

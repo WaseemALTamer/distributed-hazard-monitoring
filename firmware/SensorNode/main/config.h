@@ -23,6 +23,8 @@ namespace Config{
 
     extern int network_port;
 
+    extern int broadcast_cooldown_duration_ms;
+
     void save();
     bool load();
     

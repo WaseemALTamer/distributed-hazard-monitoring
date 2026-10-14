@@ -44,7 +44,7 @@ class TestMessageEncoding(unittest.TestCase):
             temperature=23.5,
             humidity=55.2,
             carbon_dioxide=650.0,
-            methane=0.12,
+            natrual_gas=0.12,
             smoke=0.05,
         )
 
@@ -55,7 +55,7 @@ class TestMessageEncoding(unittest.TestCase):
         self.assertAlmostEqual(decoded.temperature, 23.5)
         self.assertAlmostEqual(decoded.humidity, 55.2, places=5)
         self.assertAlmostEqual(decoded.carbon_dioxide, 650.0)
-        self.assertAlmostEqual(decoded.methane, 0.12, places=5)
+        self.assertAlmostEqual(decoded.natrual_gas, 0.12, places=5)
         self.assertAlmostEqual(decoded.smoke, 0.05, places=5)
 
     def test_information_zero_values(self):
@@ -68,7 +68,7 @@ class TestMessageEncoding(unittest.TestCase):
         self.assertEqual(decoded.temperature, 0.0)
         self.assertEqual(decoded.humidity, 0.0)
         self.assertEqual(decoded.carbon_dioxide, 0.0)
-        self.assertEqual(decoded.methane, 0.0)
+        self.assertEqual(decoded.natrual_gas, 0.0)
         self.assertEqual(decoded.smoke, 0.0)
 
     # --------------------------------------------------
@@ -256,7 +256,7 @@ class TestMessageEncoding(unittest.TestCase):
                 temperature=22.5,
                 humidity=48.0,
                 carbon_dioxide=500.0,
-                methane=0.0,
+                natrual_gas=0.0,
                 smoke=0.0,
             ),
         )

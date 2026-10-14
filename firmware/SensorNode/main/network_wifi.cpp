@@ -8,6 +8,7 @@
 #include "protocol_event_handler.h"
 
 
+
 namespace NetworkWifi{
 
     
@@ -20,6 +21,8 @@ namespace NetworkWifi{
 
 
     unsigned long last_reconnect_attempt = 0;
+
+    uint8_t mac_address[6];
 
 
 
@@ -78,10 +81,16 @@ namespace NetworkWifi{
 
 
     void init(){
+        
+        
+        
         WiFi.mode(WIFI_STA);
-        WiFi.setAutoReconnect(true);
+        WiFi.STA.begin(); // for some reason i need to began the STA wifi to be able to get the mac address
+
+        WiFi.macAddress(mac_address);
 
 
+        WiFi.setAutoReconnect(true);        
         WiFi.begin(Config::network_ssid, Config::network_password);
     }
 
@@ -102,6 +111,7 @@ namespace NetworkWifi{
             if (!is_connected){
                 Serial.println(WiFi.localIP());
                 is_connected = true;
+                stop_hotspot();
             }
 
             //if (is_connected) {

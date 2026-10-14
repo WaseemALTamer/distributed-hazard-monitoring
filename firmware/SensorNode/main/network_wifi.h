@@ -10,7 +10,7 @@ namespace NetworkWifi
 
     extern bool is_connected;
 
-
+    extern uint8_t mac_address[6];
 
     // expose the init function so anybody can
     // excuate it and add the schedule it 

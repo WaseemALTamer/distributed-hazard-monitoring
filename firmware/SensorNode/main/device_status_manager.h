@@ -6,6 +6,9 @@
 
 namespace DeviceStatusManager {
 
+
+    extern int current_state;
+    
     void set_status(int status);
 
     void init();

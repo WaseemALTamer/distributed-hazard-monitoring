@@ -27,6 +27,8 @@ namespace Config{
 
     int network_port = 39394;
 
+    int broadcast_cooldown_duration_ms = 10000;
+
 
     void save() {
 
