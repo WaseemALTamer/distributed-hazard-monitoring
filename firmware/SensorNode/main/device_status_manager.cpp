@@ -20,9 +20,6 @@ namespace DeviceStatusManager{
 
     // this module is a watch dog for the whole  system it will not modify anything
     // it will simply just listen apply sequences whlie also  holding devices state
-    // note that all the sequences are not responsible in doing anything other than
-    // playing led sequences all the  other tasks  like wifi  connect trasmit  data
-    // every few seconds is a system job not a sequences job  
 
 
     int current_state = 0;
