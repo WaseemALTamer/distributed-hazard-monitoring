@@ -4,6 +4,7 @@
 
 #include "Config.h"
 #include "protocol_event_handler.h"
+#include "constants.h"
 
 
 // unless you establish a strong connection saving and data will feel jankey
@@ -27,7 +28,7 @@ namespace Config{
 
     int network_port = 39394;
 
-    int broadcast_cooldown_duration_ms = 10000;
+    int broadcast_cooldown_duration_ms = BROADCAST_INTERVAL_NORMAL;
 
 
     void save() {

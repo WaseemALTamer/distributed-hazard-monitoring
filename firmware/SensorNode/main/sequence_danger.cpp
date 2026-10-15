@@ -3,7 +3,7 @@
 #include "sequence_manager.h"
 #include "tick_system/transition_ease_in_out.h"
 #include "led_controller.h"
-
+#include "config.h"
 
 
 
@@ -57,6 +57,9 @@ namespace SequenceDanger{
 
         SequenceManager::sequence_steps[1].func = step_2;
         SequenceManager::sequence_steps[1].cooldown = 1;
+
+
+        Config::broadcast_cooldown_duration_ms = BROADCAST_INTERVAL_DANGER;
 
     }
 }
