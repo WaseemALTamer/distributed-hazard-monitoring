@@ -81,14 +81,14 @@ namespace SequenceBoot{
         LEDController::led_red.duration = 1;
 
 
-        LEDController::led_red.starting_value = 0;
-        LEDController::led_red.ending_value = 1;
-        LEDController::led_red.duration = 1;
+        LEDController::led_green.starting_value = 0;
+        LEDController::led_green.ending_value = 1;
+        LEDController::led_green.duration = 1;
 
 
-        LEDController::led_red.starting_value = 0;
-        LEDController::led_red.ending_value = 1;
-        LEDController::led_red.duration = 1;
+        LEDController::led_blue.starting_value = 0;
+        LEDController::led_blue.ending_value = 1;
+        LEDController::led_blue.duration = 1;
 
 
 
