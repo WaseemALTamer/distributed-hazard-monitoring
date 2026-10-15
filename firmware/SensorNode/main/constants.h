@@ -19,6 +19,11 @@
 #define LED_GREEN_PIN 18
 #define LED_BLUE_PIN 19
 
+#define BUTTON_DANGER_PIN 12
+#define BUTTON_NORMAL_PIN 13
+
+#define MAX_BUTTON_CALLBACKS 5
+
 
 
 

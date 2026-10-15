@@ -6,13 +6,14 @@
 
 #include "protocol_event_handler.h"
 #include "protocol.h"
-
+#include "buttons.h"
 
 
 #include "sequence_wifi_connecting.h"
 #include "sequence_normal.h"
 #include "sequence_danger.h"
 #include "sequence_boot.h"
+
 
 
 
@@ -64,9 +65,29 @@ namespace DeviceStatusManager{
     }
 
 
+    void button_test_danger(ButtonState state){
+        if (state == BUTTON_STATE_PRESSED)
+            set_status(DEVICE_STATUS_DANGER);
+    }
+
+
+
+    void button_test_normal(ButtonState state){
+        if (state == BUTTON_STATE_PRESSED)
+            set_status(DEVICE_STATUS_NORMAL);
+    }
+
+
+
+
+
     void init(){
         ProtocalEventHandler::register_set_device_status_callback(network_set_status);
+
+        Buttons::register_danger_button_callback(button_test_danger);
+        Buttons::register_normal_button_callback(button_test_normal);
     }
+
 
     void loop(){
         // this loop orders the if statments in prority the if statmets
@@ -82,7 +103,8 @@ namespace DeviceStatusManager{
 
 
         // check danger
-        if(0){ 
+        if(current_state == DEVICE_STATUS_DANGER){
+            // we intentionally get our self stuck in danger state
             set_status(DEVICE_STATUS_DANGER);
             return; 
         }

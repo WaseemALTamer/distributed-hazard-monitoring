@@ -10,6 +10,7 @@
 #include "network_wifi.h"
 #include "rtc_clock.h"
 #include "protocol.h"
+#include "buttons.h"
 #include "config.h"
 
 
@@ -32,15 +33,23 @@ void setup() {
     // the order of the intiated systems are intentional
 
     Config::init();
-    DeviceStatusManager::init();
 
+    // set the device state
+    DeviceStatusManager::init();
     DeviceStatusManager::set_status(DEVICE_STATUS_BOOTING);
     
+    Buttons::init();
+
+
+
     RTCClock::init();
     LEDController::init();
     NetworkWifi::init();
-
+    
     DataBroadcaster::init();
+
+    
+    
 }
 
 
@@ -48,10 +57,13 @@ void loop() {
 
     // the order of updating the systems are intentional
 
+    
+    Buttons::loop();
     RTCClock::loop();
 
     LEDController::loop();
     SequenceManager::loop();
+    
 
     NetworkWifi::loop();
 
