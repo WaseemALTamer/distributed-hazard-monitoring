@@ -15,17 +15,18 @@ namespace SequenceNormal{
 
 
     void step_1(void* ctx){
-        LEDController::led_red.reverse_transition();
-        LEDController::led_green.start_transition();
-        LEDController::led_blue.reverse_transition();
+        LEDController::transition_red_led(0, 1);
+        LEDController::transition_green_led(1, 1);
+        LEDController::transition_blue_led(0, 1);
     }
 
 
     void step_2(void* ctx){
-        LEDController::led_red.reverse_transition();
-        LEDController::led_green.reverse_transition();
-        LEDController::led_blue.reverse_transition();
+        LEDController::transition_red_led(0, 1);
+        LEDController::transition_green_led(0, 1);
+        LEDController::transition_blue_led(0, 1);
     }
+    
     
 
 
@@ -34,20 +35,6 @@ namespace SequenceNormal{
     void init(){
 
         SequenceManager::flush_steps(); // flush the steps before adding the new ones
-
-        LEDController::led_red.starting_value = 0;
-        LEDController::led_red.ending_value = 1;
-        LEDController::led_red.duration = 1;
-
-
-        LEDController::led_green.starting_value = 0;
-        LEDController::led_green.ending_value = 1;
-        LEDController::led_green.duration = 1;
-
-
-        LEDController::led_blue.starting_value = 0;
-        LEDController::led_blue.ending_value = 1;
-        LEDController::led_blue.duration = 1;
 
 
 
