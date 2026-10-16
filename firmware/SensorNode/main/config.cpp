@@ -1,14 +1,14 @@
 #include <Preferences.h>
 #include <Arduino.h>
 
-
 #include "Config.h"
 #include "protocol_event_handler.h"
 #include "constants.h"
+#include "sequence_reboot.h"
 
 
 // unless you establish a strong connection saving and data will feel jankey
-
+// certain config edits will require reboot for example changing wifi
 
 namespace Config{
 
@@ -102,7 +102,10 @@ namespace Config{
         name[sizeof(name) - 1] = '\0';
         name[sizeof(name) - 1] = '\0';
 
-        save();
+        save(); // save wifi
+
+
+        
     }
 
 
@@ -118,6 +121,8 @@ namespace Config{
         //Serial.printf("WiFi Password: '%s'\n", network_password);
 
         save();
+        
+        SequenceReeboot::init();
     }
 
 

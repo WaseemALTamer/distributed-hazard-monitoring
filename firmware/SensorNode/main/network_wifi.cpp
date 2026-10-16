@@ -45,11 +45,15 @@ namespace NetworkWifi{
         if (hotspot_active) return;
 
 
-        WiFi.mode(WIFI_AP_STA);
+        WiFi.mode(WIFI_AP);
+        WiFi.setSleep(false);
 
         bool success = WiFi.softAP(
             Config::hotspot_ssid,
-            Config::hotspot_password
+            Config::hotspot_password,
+            6,
+            false,
+            4
         );
 
         if (success) {

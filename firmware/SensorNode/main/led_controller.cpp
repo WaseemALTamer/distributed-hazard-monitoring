@@ -13,9 +13,14 @@ namespace LEDController{
     EaseInOut led_green;
     EaseInOut led_blue;
 
+    float led_red_current_value;
+    float led_green_current_value;
+    float led_blue_current_value;
 
     void set_led_red(float value, void* ctx){
         
+        led_red_current_value = value;
+
         int _value = (int)(255 * value);
 
         if (_value > 255) _value = 255;
@@ -25,6 +30,9 @@ namespace LEDController{
 
 
     void set_led_green(float value, void* ctx){
+
+        led_green_current_value = value;
+
         int _value = (int)(255 * value);
 
         if (_value > 255) _value = 255;
@@ -34,6 +42,9 @@ namespace LEDController{
 
 
     void set_led_blue(float value, void* ctx){
+
+        led_blue_current_value = value;
+
         int _value = (int)(255 * value);
 
         if (_value > 255) _value = 255;
@@ -41,6 +52,31 @@ namespace LEDController{
         analogWrite(LED_BLUE_PIN, _value);
     }
 
+
+
+    void transition_red_led(float value, float duration){
+        led_red.reset_transition();
+        led_red.starting_value = led_red_current_value;
+        led_red.ending_value = value;
+        led_red.duration = duration;
+        led_red.start_transition();
+    }
+
+    void transition_green_led(float value, float duration) {
+        led_green.reset_transition();
+        led_green.starting_value = led_green_current_value;
+        led_green.ending_value = value;
+        led_green.duration = duration;
+        led_green.start_transition();
+    }
+
+    void transition_blue_led(float value, float duration) {
+        led_blue.reset_transition();
+        led_blue.starting_value = led_blue_current_value;
+        led_blue.ending_value = value;
+        led_blue.duration = duration;
+        led_blue.start_transition();
+    }
 
 
     void init(){
