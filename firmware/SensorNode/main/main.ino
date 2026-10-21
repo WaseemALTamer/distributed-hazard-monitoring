@@ -6,6 +6,7 @@
 #include "data_broadcaster.h"
 #include "sequence_manager.h"
 #include "led_controller.h"
+#include "sensor_manager.h"
 #include "sequence_boot.h"
 #include "network_wifi.h"
 #include "rtc_clock.h"
@@ -34,19 +35,25 @@ void setup() {
 
     Config::init();
 
+
     // set the device state
     DeviceStatusManager::init();
     DeviceStatusManager::set_status(DEVICE_STATUS_BOOTING);
     
+
+    SensorManager::init();
+
     Buttons::init();
 
-
+    
 
     RTCClock::init();
     LEDController::init();
     NetworkWifi::init();
     
     DataBroadcaster::init();
+
+    
 
     
     
@@ -57,7 +64,8 @@ void loop() {
 
     // the order of updating the systems are intentional
 
-    
+    SensorManager::loop();
+
     Buttons::loop();
     RTCClock::loop();
 

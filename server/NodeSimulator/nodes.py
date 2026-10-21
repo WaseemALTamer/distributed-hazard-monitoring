@@ -33,6 +33,7 @@ class VirtualNode:
     humidity: float = 45.0
     carbon_dioxide: float = 600.0
     natrual_gas: float = 0.0
+    carbon_monoxide: float = 0
     smoke: float = 0.0
 
     @staticmethod
@@ -76,6 +77,7 @@ class VirtualNode:
             humidity=self.humidity,
             carbon_dioxide=self.carbon_dioxide,
             natrual_gas=self.natrual_gas,
+            carbon_monoxide = self.carbon_monoxide, 
             smoke=self.smoke,
         )
 
@@ -101,6 +103,7 @@ class NormalNode(VirtualNode):
         self.humidity = round(random.uniform(30.0, 60.0), 2)
         self.carbon_dioxide = round(random.uniform(400.0, 900.0), 2)
         self.natrual_gas = round(random.uniform(0.0, 0.5), 2)
+        self.carbon_monoxide = round(random.uniform(0.0, 5.0), 2)
         self.smoke = round(random.uniform(0.0, 0.5), 2)
 
 
@@ -112,11 +115,12 @@ class DangerousNode(VirtualNode):
         """
 
         self.status = DeviceStatus.DANGER
-        hazard = random.choice(("temperature", "carbon_dioxide", "natural_gas", "smoke"))
+        hazard = random.choice(("temperature", "carbon_dioxide", "natural_gas", "smoke", "carbon_monoxide"))
         self.temperature = round(random.uniform(18.0, 30.0), 2)
         self.humidity = round(random.uniform(30.0, 70.0), 2)
         self.carbon_dioxide = round(random.uniform(450.0, 1000.0), 2)
         self.natrual_gas = round(random.uniform(0.0, 1.0), 2)
+        self.carbon_monoxide = round(random.uniform(0.0, 5.0), 2)
         self.smoke = round(random.uniform(0.0, 1.0), 2)
 
         if hazard == "temperature":
@@ -125,5 +129,7 @@ class DangerousNode(VirtualNode):
             self.carbon_dioxide = round(random.uniform(2500.0, 5000.0), 2)
         elif hazard == "natural_gas":
             self.natrual_gas = round(random.uniform(15.0, 50.0), 2)
+        elif hazard == "carbon_monoxide":
+            self.carbon_monoxide =  random.uniform(3000.0, 5000.0)
         else:
             self.smoke = round(random.uniform(15.0, 50.0), 2)

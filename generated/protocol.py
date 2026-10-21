@@ -24,13 +24,8 @@ class MessageBase:
             value = getattr(self, field)
             if value is None:
                 continue
-
-            if field not in self.__fields__:
-                data += value.to_bytes()
-                continue
-
             
-            if isinstance(value, str):
+            if field_type is str:
                 _bytes = value.encode("utf-8")
                 if len(_bytes) > size:
                     raise ValueError(
@@ -40,9 +35,9 @@ class MessageBase:
 
                 data += _bytes.ljust(size, b"\x00")
                 
-            elif isinstance(value, int):
+            elif field_type is int:
                 data += value.to_bytes(size, byteorder="little")
-            elif isinstance(value, float):
+            elif field_type is float:
                 if size == 8:
                     data += struct.pack("<d", value)
                 elif size == 4:
@@ -206,6 +201,7 @@ class Information(MessageBase):
     humidity: float = 0.0
     carbon_dioxide: float = 0.0
     natrual_gas: float = 0.0
+    carbon_monoxide: float = 0.0
     smoke: float = 0.0
 
     __size__ = 21
@@ -215,6 +211,7 @@ class Information(MessageBase):
         "humidity": (float, 4),
         "carbon_dioxide": (float, 4),
         "natrual_gas": (float, 4),
+        "carbon_monoxide": (float, 4),
         "smoke": (float, 4),
     }
 

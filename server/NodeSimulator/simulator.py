@@ -84,6 +84,7 @@ class Simulator:
             f"humidity={node.humidity:5.1f}% | "
             f"CO2={node.carbon_dioxide:6.1f} | "
             f"gas={node.natrual_gas:5.1f} | "
+            f"CO={node.carbon_monoxide:5.1f} | "
             f"smoke={node.smoke:5.1f} | "
             f"bytes={len(payload)}"
         )

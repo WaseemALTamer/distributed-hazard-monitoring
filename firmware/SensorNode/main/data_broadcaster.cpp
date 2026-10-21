@@ -6,6 +6,7 @@
 #include "protocol.h"
 #include "config.h"
 
+#include "sensor_manager.h"
 
 
 
@@ -42,11 +43,12 @@ namespace DataBroadcaster{
 
         Information info = {};
         info.status = static_cast<DeviceStatus>(DeviceStatusManager::current_state);
-        info.temperature = 20.0f;
-        info.humidity = 20.0f;
-        info.carbon_dioxide = 20.0f;
-        info.natrual_gas = 20.0f;
-        info.smoke = 20.0f;
+        info.temperature = SensorManager::temperature;
+        info.humidity = SensorManager::humidity;
+        info.carbon_dioxide = SensorManager::carbon_dioxide;
+        info.natrual_gas = SensorManager::natrual_gas;
+        info.carbon_monoxide = SensorManager::carbon_monoxide;
+        info.smoke = SensorManager::smoke;
 
 
         Message message = {};

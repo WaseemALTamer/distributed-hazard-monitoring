@@ -91,6 +91,9 @@ uint8_t *information_encode(const Information *msg, uint8_t *buffer, size_t *buf
     memcpy(&buffer[offset], &msg->natrual_gas, 4);
     offset += 4;
 
+    memcpy(&buffer[offset], &msg->carbon_monoxide, 4);
+    offset += 4;
+
     memcpy(&buffer[offset], &msg->smoke, 4);
     offset += 4;
 
@@ -119,6 +122,9 @@ const uint8_t *information_decode(Information *msg, const uint8_t *buffer, size_
     offset += 4;
 
     memcpy(&msg->natrual_gas, &buffer[offset], 4);
+    offset += 4;
+
+    memcpy(&msg->carbon_monoxide, &buffer[offset], 4);
     offset += 4;
 
     memcpy(&msg->smoke, &buffer[offset], 4);
