@@ -134,7 +134,8 @@ namespace Config{
         network_ssid[0] = '\0';
         network_password[0] = '\0';
 
-        hotspot_ssid[0] = '\0';
+        strncpy(hotspot_ssid, "NODE-1-HOTSPOT", sizeof(hotspot_ssid));
+        hotspot_ssid[sizeof(hotspot_ssid) - 1] = '\0';
         hotspot_password[0] = '\0';
 
         network_port = 39394;

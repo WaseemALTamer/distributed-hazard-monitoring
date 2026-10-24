@@ -2,7 +2,7 @@
 #include "constants.h"
 
 #include "tick_system/tick_controller.h"
-
+#include "sensor_environment.h"
 
 // this file contains the Smoke and CO sensors if the sensor grow this files needs
 // to me made into two smaller files one dedcated for smoke and one dedcated for CO
@@ -57,7 +57,7 @@ namespace SensorManager{
 
 
 
-    
+
 
 
     TickController tick_controller;
@@ -108,6 +108,7 @@ namespace SensorManager{
 
     void init(){
         analogSetAttenuation(ADC_11db);
+        SensorEnvironment::init();
     }
 
 
@@ -126,6 +127,14 @@ namespace SensorManager{
 
         smoke = get_estimate_smoke_ppm(voltSmoke);
         carbon_monoxide = get_estimate_co_ppm(voltCO);
+
+
+        SensorEnvironment::loop(); // run the sensor Enviroment loop to get the new data
+
+        // copy the values fro the sensor now
+        humidity = SensorEnvironment::humidity;
+        temperature = SensorEnvironment::temperature;
+        carbon_dioxide = SensorEnvironment::carbon_dioxide;
     }
 
 
