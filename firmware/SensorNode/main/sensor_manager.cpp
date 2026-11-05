@@ -121,12 +121,17 @@ namespace SensorManager{
 
         int rawSmoke = analogRead(SENSOR_SMOKE_PIN);
         int rawCO = analogRead(SENSOR_CARBON_MONOXIDE_PIN);
+        int rawNatrualGas = analogRead(SENSOR_NATURAL_GAS_PIN);
 
         float voltSmoke = (rawSmoke / 4095.0) * 3.3;
         float voltCO = (rawCO / 4095.0) * 3.3;
+        float voltNatrualGas = (rawNatrualGas / 4095.0) * 3.3;
 
         smoke = get_estimate_smoke_ppm(voltSmoke);
         carbon_monoxide = get_estimate_co_ppm(voltCO);
+
+        // make the function that returns natrual gasses level
+        natrual_gas = voltNatrualGas; // this needs to be changed later on
 
 
         SensorEnvironment::loop(); // run the sensor Enviroment loop to get the new data

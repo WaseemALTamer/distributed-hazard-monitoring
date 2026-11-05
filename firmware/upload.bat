@@ -1,7 +1,11 @@
 @echo off
 set "ROOT=%~dp0"
 set "BUILD=%ROOT%build"
+<<<<<<< HEAD
 set "PORT=COM5"
+=======
+set "PORT=COM4"
+>>>>>>> 2cf94d6cda095a6b60f8c609b547baa797d0811e
 set "FQBN=esp32:esp32:esp32"
 
 echo Batch file location: %ROOT%
