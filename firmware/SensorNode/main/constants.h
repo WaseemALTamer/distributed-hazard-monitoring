@@ -15,7 +15,7 @@
 #define SCL_PIN 22
 
 
-#define LED_RED_PIN 17
+#define LED_RED_PIN 4
 #define LED_GREEN_PIN 18
 #define LED_BLUE_PIN 19
 
