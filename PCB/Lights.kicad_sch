@@ -994,7 +994,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "abc4fb3f-a18e-4f27-b921-24ff2a840014")
-		(property "Reference" "D3"
+		(property "Reference" "LED3"
 			(at 131.1275 82.55 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1067,7 +1067,7 @@
 		(instances
 			(project "DHM_PCB"
 				(path "/44d4ac4b-82bc-4869-b060-b1b7da55b21f/1d685d90-c6fd-4d1b-92cd-3a53151ba32e"
-					(reference "D3")
+					(reference "LED3")
 					(unit 1)
 				)
 			)
@@ -1085,7 +1085,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0170049-44cd-450f-8b64-252c1e696ae8")
-		(property "Reference" "D1"
+		(property "Reference" "LED1"
 			(at 131.1275 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1158,7 +1158,7 @@
 		(instances
 			(project "DHM_PCB"
 				(path "/44d4ac4b-82bc-4869-b060-b1b7da55b21f/1d685d90-c6fd-4d1b-92cd-3a53151ba32e"
-					(reference "D1")
+					(reference "LED1")
 					(unit 1)
 				)
 			)
@@ -1176,7 +1176,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "da3b0911-8595-4d97-803b-929bcf51c5e9")
-		(property "Reference" "D2"
+		(property "Reference" "LED2"
 			(at 131.1275 71.12 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1249,7 +1249,7 @@
 		(instances
 			(project "DHM_PCB"
 				(path "/44d4ac4b-82bc-4869-b060-b1b7da55b21f/1d685d90-c6fd-4d1b-92cd-3a53151ba32e"
-					(reference "D2")
+					(reference "LED2")
 					(unit 1)
 				)
 			)

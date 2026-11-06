@@ -834,8 +834,8 @@
 				)
 			)
 		)
-		(property "Value" ""
-			(at 0 0 0)
+		(property "Value" "MICS-5524"
+			(at -0.762 -9.652 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1165,8 +1165,8 @@
 				)
 			)
 		)
-		(property "Value" ""
-			(at 0 0 0)
+		(property "Value" "SCD40"
+			(at 0.508 -9.652 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -1313,8 +1313,8 @@
 				)
 			)
 		)
-		(property "Value" ""
-			(at 0 0 0)
+		(property "Value" "SEN05XX"
+			(at 0.254 -8.382 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
