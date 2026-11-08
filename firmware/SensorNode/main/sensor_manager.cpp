@@ -132,6 +132,8 @@ namespace SensorManager{
 
         // make the function that returns natrual gasses level
         natrual_gas = voltNatrualGas; // this needs to be changed later on
+        
+        //Serial.println(natrual_gas);
 
 
         SensorEnvironment::loop(); // run the sensor Enviroment loop to get the new data

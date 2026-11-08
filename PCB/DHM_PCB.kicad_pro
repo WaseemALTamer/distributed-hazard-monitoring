@@ -485,7 +485,9 @@
   },
   "libraries": {
     "pinned_footprint_libs": [],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Local"
+    ]
   },
   "meta": {
     "filename": "DHM_PCB.kicad_pro",
@@ -661,7 +663,7 @@
         "uuid": "44d4ac4b-82bc-4869-b060-b1b7da55b21f"
       }
     ],
-    "used_designators": "U1-7,#FLG1-6,R1-8,BT1,D1-4,#PWR1-19,VCC1,SW1-3,5V1-29,C1-2,VCC_SW1,VIN1,EN1,GND1,VN1,VP1",
+    "used_designators": "U1-9,#FLG1-6,R1-8,BT1,D1-4,#PWR1-21,VCC1,SW1-3,5V1-29,C1-3,VCC_SW1,VIN1,EN1,GND1,VN1,VP1",
     "variants": []
   },
   "sheets": [
