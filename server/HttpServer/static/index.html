@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Hazard Monitoring</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/app.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div>
+            <p class="eyebrow">Distributed Hazard Monitoring</p>
+            <h1>Monitoring Dashboard</h1>
+            <p class="subtitle">Live environmental sensor information</p>
+        </div>
+
+        <div class="connection">
+            <span id="connection-dot" class="dot"></span>
+            <span id="connection-status">Connecting...</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="notice">
+            Prototype monitoring system. Do not rely on this
+            dashboard for emergency evacuation decisions.
+        </div>
+
+        <section
+            id="danger-banner"
+            class="danger-banner"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            hidden
+        >
+            <div class="danger-banner-icon" aria-hidden="true">!</div>
+            <div>
+                <h2 id="danger-banner-title">Hazard reported</h2>
+                <p id="danger-banner-message"></p>
+            </div>
+        </section>
+
+        <section class="overview">
+            <div class="stat">
+                <span class="stat-label">Sensors reporting</span>
+                <strong id="sensor-count">0</strong>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Rooms configured</span>
+                <strong id="room-count">0</strong>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">Last update</span>
+                <strong id="last-update">No data</strong>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Sensor Readings</h2>
+                    <p>Latest readings received from the sensor nodes</p>
+                </div>
+            </div>
+
+            <div id="sensor-list" class="sensor-grid">
+                <div class="empty-state">
+                    Waiting for sensor readings...
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Building Rooms</h2>
+                    <p>Rooms loaded from the building configuration</p>
+                </div>
+            </div>
+
+            <div id="room-list" class="room-grid">
+                <div class="empty-state">
+                    Waiting for building information...
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Building Floor Plan</h2>
+                    <p>Room connections and designated exits</p>
+                </div>
+            </div>
+
+            <div id="floor-plan" class="floor-plan">
+                <div class="empty-state">
+                    Waiting for building layout...
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Sensor History</h2>
+                    <p>Historical environmental readings by room</p>
+                </div>
+            </div>
+
+            <div class="history-panel">
+                <div class="history-controls">
+                    <label for="history-room">Select room</label>
+                    <select id="history-room" disabled>
+                        <option value="">Waiting for building...</option>
+                    </select>
+
+                    <button
+                        id="refresh-history"
+                        type="button"
+                        disabled
+                    >
+                        Refresh history
+                    </button>
+                </div>
+
+                <p
+                    id="history-status"
+                    class="history-status"
+                    role="status"
+                >
+                    Waiting for building information...
+                </p>
+
+                <div class="history-grid">
+                    <article class="history-card">
+                        <h3>Temperature</h3>
+                        <p>Temperature readings (°C)</p>
+
+                        <div
+                            id="temperature-chart"
+                            class="chart-area"
+                        >
+                            <div class="empty-state">
+                                No history loaded.
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="history-card">
+                        <h3>Humidity</h3>
+                        <p>Relative humidity readings (%)</p>
+
+                        <div
+                            id="humidity-chart"
+                            class="chart-area"
+                        >
+                            <div class="empty-state">
+                                No history loaded.
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <p class="history-note">
+                    History is currently provided by the test API.
+                    Charts do not establish that readings were
+                    recorded by physical sensors.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="replay-title">
+            <div class="section-heading">
+                <div>
+                    <h2 id="replay-title">Replay Preview</h2>
+                    <p>
+                        Inspect recorded or simulated readings
+                        without changing live monitoring
+                    </p>
+                </div>
+            </div>
+
+            <div class="replay-panel">
+                <div class="replay-heading">
+                    <strong>Historical Data Preview</strong>
+                    <span class="replay-badge">REPLAY</span>
+                </div>
+
+                <p class="replay-description">
+                    The current API returns historical readings
+                    immediately. Timed incident playback will be
+                    connected when the backend replay service
+                    is available.
+                </p>
+
+                <div class="replay-controls">
+                    <div class="replay-field">
+                        <label for="replay-room">Room</label>
+                        <select id="replay-room" disabled>
+                            <option value="">
+                                Waiting for building...
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="replay-field">
+                        <label for="replay-from">From timestamp</label>
+                        <input
+                            id="replay-from"
+                            type="number"
+                            step="any"
+                            value="1000"
+                        >
+                    </div>
+
+                    <div class="replay-field">
+                        <label for="replay-to">To timestamp</label>
+                        <input
+                            id="replay-to"
+                            type="number"
+                            step="any"
+                            value="2000"
+                        >
+                    </div>
+
+                    <button
+                        id="load-replay"
+                        type="button"
+                        disabled
+                    >
+                        Load preview
+                    </button>
+                </div>
+
+                <p
+                    id="replay-status"
+                    class="replay-status"
+                    role="status"
+                >
+                    Select a room and load a replay preview.
+                </p>
+
+                <div
+                    id="replay-display"
+                    class="replay-display"
+                    hidden
+                >
+                    <div class="replay-reading-heading">
+                        <strong id="replay-position">
+                            Reading 0 of 0
+                        </strong>
+
+                        <span id="replay-timestamp">
+                            Timestamp: --
+                        </span>
+                    </div>
+
+                    <div id="replay-values" class="replay-values">
+                    </div>
+
+                    <div class="replay-navigation">
+                        <button
+                            id="replay-previous"
+                            type="button"
+                            disabled
+                        >
+                            Previous
+                        </button>
+
+                        <button
+                            id="replay-next"
+                            type="button"
+                            disabled
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+                <p class="history-note">
+                    REPLAY PREVIEW — Historical test data.
+                    This is separate from the live sensor
+                    display and does not represent an active
+                    emergency or verified evacuation event.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Distributed Hazard Monitoring · University Project Prototype
+    </footer>
+</body>
+</html>
