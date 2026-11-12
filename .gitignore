@@ -13,3 +13,5 @@ Ground.ipynb
 
 
 .venv/
+
+.pytest_cache/
