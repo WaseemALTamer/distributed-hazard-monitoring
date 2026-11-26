@@ -55,6 +55,10 @@ def check_and_decode(raw):
     # CHECK 2: is it a sensor reading? (the only kind the hub handles for now)
     if message.content_type != ContentType.INFORMATION:
         return _reject(f"content type {message.content_type} is not a sensor reading", raw)
+    
+    # CHECK 2b: is it encrypted? The hub can't read encrypted packets yet
+    if message.is_encrypted:            # 1 = encrypted, 0 = not
+        return _reject("packet is encrypted (not supported yet)", raw)
 
     # CHECK 3: is it exactly the right size for a sensor reading?
     if len(raw) != SENSOR_PACKET_SIZE:

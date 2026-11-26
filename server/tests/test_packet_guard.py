@@ -83,3 +83,12 @@ def test_rejections_are_counted():
     before = packet_guard.rejected_count       # count before
     check_and_decode(b"hello")                 # obvious junk
     assert packet_guard.rejected_count == before + 1   # went up by one
+
+# 9. Encrypted packets: rejected (the hub can't read them yet)
+def test_encrypted_packet_is_rejected():
+    message = Message().decode(make_packet())   # take a good packet apart
+    message.is_encrypted = 1                    # mark it as encrypted
+    raw = message.to_bytes()                    # turn it back into bytes
+    assert len(raw) == 105                      # still the right size...
+    assert check_and_decode(raw) is None        # ...but rejected because it's encrypted
+    
