@@ -1,6 +1,9 @@
-from generated.protocol import Message, Information, ContentType
 import asyncio
-from server.HttpServer.udp_receiver import UDPReceiver
+import socket
+import pytest
+
+from generated.protocol import Message, Information, ContentType
+from server.HttpServer.udp_receiver import UDPReceiver, start_udp_receiver
 
 
 def test_udp_receiver_decodes_sensor_reading():
@@ -27,26 +30,20 @@ def test_udp_receiver_decodes_sensor_reading():
     packet = message.to_bytes()
 
     # Pass the packet to the receiver
-    receiver.datagram_received(packet, ("127.0.0.1", 5005))
+    receiver.datagram_received(packet, ("127.0.0.1", 39394))
 
     # Check that exactly one reading was received
     assert len(received_readings) == 1
 
     reading = received_readings[0]
 
-    # Verify the decoded sensor information
-    assert reading["device"] == "TEST-NODE"
-    assert reading["mac_address"] == "AABBCCDDEE01"
+    # Verify the decoded sensor information (WP0 names)
+    assert reading["device_name"] == "TEST-NODE"        # was "device"
+    assert reading["mac"] == "AA:BB:CC:DD:EE:01"        # was "mac_address", now with colons
     assert reading["temperature"] == 25.5
     assert reading["humidity"] == 60.0
     assert reading["carbon_dioxide"] == 450.0
     assert reading["status"] == 2
-
-    import asyncio
-import socket
-import pytest
-
-from server.HttpServer.udp_receiver import start_udp_receiver
 
 
 @pytest.mark.anyio
@@ -88,10 +85,39 @@ async def test_udp_receiver_socket():
 
         # Check the received sensor information
         assert len(received_readings) == 1
-        assert received_readings[0]["device"] == "SOCKET-TEST"
+        assert received_readings[0]["device_name"] == "SOCKET-TEST"   # was "device"
         assert received_readings[0]["temperature"] == 27.5
         assert received_readings[0]["humidity"] == 55.0
 
     finally:
         # Always close the UDP listener
         transport.close()
+
+
+# NEW: every good reading is also shared on the event bus, with the sender's IP
+def test_reading_is_published_on_event_bus():
+    from event_bus import bus                       # the same bus the receiver uses
+    published = []                                  # collects what arrives on the bus
+    bus.subscribe("packet.received", published.append)   # listen on the channel
+
+    receiver = UDPReceiver(lambda reading: None)    # we don't care about the web server here
+    message = Message(
+        device_name="BUS-TEST",
+        mac_address=0xAABBCCDDEE04,
+        content_type=ContentType.INFORMATION,
+        content=Information(smoke=1.5, status=2)
+    )
+    receiver.datagram_received(message.to_bytes(), ("10.42.0.23", 39394))   # pretend it came from 10.42.0.23
+
+    assert len(published) == 1                      # exactly one reading went on the bus
+    assert published[0]["device_name"] == "BUS-TEST"
+    assert published[0]["ip"] == "10.42.0.23"       # the sender's IP was added
+    assert published[0]["smoke"] == 1.5
+
+
+# NEW: junk packets never reach the web server
+def test_bad_packet_is_ignored():
+    received_readings = []
+    receiver = UDPReceiver(received_readings.append)
+    receiver.datagram_received(b"junk", ("127.0.0.1", 39394))   # not a real packet
+    assert received_readings == []                  # nothing was passed on

@@ -51,7 +51,7 @@ async def lifespan(app: FastAPI):
     pending_tasks = set()
 
     def on_sensor_reading(reading: dict):
-        latest_readings[reading["mac_address"]] = reading
+        latest_readings[reading["mac"]] = reading
 
         task = asyncio.create_task(
             manager.broadcast({
@@ -63,7 +63,7 @@ async def lifespan(app: FastAPI):
         pending_tasks.add(task)
         task.add_done_callback(pending_tasks.discard)
 
-    udp_port = int(os.getenv("UDP_PORT", "5005"))
+    udp_port = int(os.getenv("UDP_PORT", "39394"))
 
     transport, protocol = await start_udp_receiver(
         on_sensor_reading,
