@@ -204,7 +204,7 @@ class Information(MessageBase):
     carbon_monoxide: float = 0.0
     smoke: float = 0.0
 
-    __size__ = 21
+    __size__ = 25
     __fields__ = {
         "status": (int, 1),
         "temperature": (float, 4),

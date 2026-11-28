@@ -63,12 +63,13 @@ class TestMessageEncoding(unittest.TestCase):
 
         encoded, decoded = self.assert_round_trip(original)
 
-        self.assertEqual(len(encoded), 21)
+        self.assertEqual(len(encoded), 25)
         self.assertEqual(decoded.status, DeviceStatus.NONE)
         self.assertEqual(decoded.temperature, 0.0)
         self.assertEqual(decoded.humidity, 0.0)
         self.assertEqual(decoded.carbon_dioxide, 0.0)
         self.assertEqual(decoded.natrual_gas, 0.0)
+        self.assertEqual(decoded.carbon_monoxide, 0.0)
         self.assertEqual(decoded.smoke, 0.0)
 
     # --------------------------------------------------
@@ -263,7 +264,7 @@ class TestMessageEncoding(unittest.TestCase):
 
         encoded, decoded = self.assert_round_trip(original)
 
-        self.assertEqual(len(encoded), 80 + 21)
+        self.assertEqual(len(encoded), 80 + 25)
         self.assertEqual(decoded.device_name, "ESP32_Test")
         self.assertEqual(decoded.mac_address, 0x123456789ABC)
         self.assertEqual(decoded.time_stamp, 1700000000.0)
@@ -339,7 +340,7 @@ class TestMessageEncoding(unittest.TestCase):
     # --------------------------------------------------
 
     def test_information_payload_size(self):
-        self.assertEqual(Information.__size__, 21)
+        self.assertEqual(Information.__size__, 25)
 
     def test_command_payload_size(self):
         self.assertEqual(Command.__size__, 9)

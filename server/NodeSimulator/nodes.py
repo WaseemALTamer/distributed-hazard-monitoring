@@ -1,15 +1,10 @@
 from __future__ import annotations
 
-
-
 from dataclasses import dataclass
-from typing import Optional
 from pathlib import Path
 import random
-import time
 import sys
-
-
+import time
 
 current_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(current_dir))
@@ -22,10 +17,9 @@ from protocol import (
 )
 
 
-
-# parent class 
+# parent class
 @dataclass
-class VirtualNode: 
+class VirtualNode:
     device_name: str
     mac_address: int
     status: DeviceStatus = DeviceStatus.NORMAL
@@ -33,7 +27,7 @@ class VirtualNode:
     humidity: float = 45.0
     carbon_dioxide: float = 600.0
     natrual_gas: float = 0.0
-    carbon_monoxide: float = 0
+    carbon_monoxide: float = 0.0
     smoke: float = 0.0
 
     @staticmethod
@@ -63,6 +57,7 @@ class VirtualNode:
         self.humidity = round(max(10.0, min(95.0, self.humidity + random.uniform(-1.5, 1.5))), 2)
         self.carbon_dioxide = round(max(350.0, min(2000.0, self.carbon_dioxide + random.uniform(-35.0, 35.0))), 2)
         self.natrual_gas = round(max(0.0, min(100.0, self.natrual_gas + random.uniform(-0.1, 0.1))), 2)
+        self.carbon_monoxide = round(max(0.0, min(100.0, self.carbon_monoxide + random.uniform(-0.1, 0.1))), 2)
         self.smoke = round(max(0.0, min(100.0, self.smoke + random.uniform(-0.1, 0.1))), 2)
 
     def to_message(self) -> Message:
@@ -77,7 +72,7 @@ class VirtualNode:
             humidity=self.humidity,
             carbon_dioxide=self.carbon_dioxide,
             natrual_gas=self.natrual_gas,
-            carbon_monoxide = self.carbon_monoxide, 
+            carbon_monoxide=self.carbon_monoxide,
             smoke=self.smoke,
         )
 
@@ -97,13 +92,12 @@ class NormalNode(VirtualNode):
         """
             this function will fabraicate normal data
         """
-
         self.status = DeviceStatus.NORMAL
         self.temperature = round(random.uniform(18.0, 27.0), 2)
         self.humidity = round(random.uniform(30.0, 60.0), 2)
         self.carbon_dioxide = round(random.uniform(400.0, 900.0), 2)
         self.natrual_gas = round(random.uniform(0.0, 0.5), 2)
-        self.carbon_monoxide = round(random.uniform(0.0, 5.0), 2)
+        self.carbon_monoxide = round(random.uniform(0.0, 0.5), 2)
         self.smoke = round(random.uniform(0.0, 0.5), 2)
 
 
@@ -111,25 +105,24 @@ class DangerousNode(VirtualNode):
     # override the update reading function
     def update_readings(self) -> None:
         """
-            this function will fabraicate dangerous date
+            this function will fabraicate dangerous data
         """
-
         self.status = DeviceStatus.DANGER
-        hazard = random.choice(("temperature", "carbon_dioxide", "natural_gas", "smoke", "carbon_monoxide"))
+        hazard = random.choice(("carbon_dioxide", "natural_gas", "smoke", "carbon_monoxide"))
         self.temperature = round(random.uniform(18.0, 30.0), 2)
         self.humidity = round(random.uniform(30.0, 70.0), 2)
         self.carbon_dioxide = round(random.uniform(450.0, 1000.0), 2)
         self.natrual_gas = round(random.uniform(0.0, 1.0), 2)
-        self.carbon_monoxide = round(random.uniform(0.0, 5.0), 2)
+        self.carbon_monoxide = round(random.uniform(0.0, 1.0), 2)
         self.smoke = round(random.uniform(0.0, 1.0), 2)
 
-        if hazard == "temperature":
-            self.temperature = round(random.uniform(45.0, 60.0), 2)
-        elif hazard == "carbon_dioxide":
+        if hazard == "carbon_dioxide":
             self.carbon_dioxide = round(random.uniform(2500.0, 5000.0), 2)
         elif hazard == "natural_gas":
             self.natrual_gas = round(random.uniform(15.0, 50.0), 2)
         elif hazard == "carbon_monoxide":
-            self.carbon_monoxide =  random.uniform(3000.0, 5000.0)
+            self.carbon_monoxide = round(random.uniform(15.0, 50.0), 2)
         else:
+            # Smoke danger requires CO2 >= 1500 per WP0/WP3 cross-check rule
             self.smoke = round(random.uniform(15.0, 50.0), 2)
+            self.carbon_dioxide = round(random.uniform(1500.0, 3000.0), 2)
