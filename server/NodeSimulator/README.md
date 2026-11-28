@@ -41,3 +41,9 @@ CHECK THE PRAMATERS OUT FOR MORE CONTROL
     --interval INTERVAL   seconds between broadcasts (default: 10)
     --port PORT           UDP destination port (default: 39394)
 ```
+
+INTERACTIVE DEMO COMMANDS (WHILE RUNNING):
+Type any of the following in the terminal and press Enter:
+- `danger <node_number>` : switch node `<node_number>` (1-based) to dangerous readings and broadcast immediately (e.g. `danger 2`)
+- `normal <node_number>` : switch node `<node_number>` (1-based) back to normal readings and broadcast immediately (e.g. `normal 2`)
+- `status` (or `list`)   : list all simulated nodes, their MAC addresses, and their current mode
